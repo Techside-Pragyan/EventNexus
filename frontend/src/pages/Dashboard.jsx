@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import API from '../services/api';
 import Navbar from '../components/Navbar';
-import { Calendar, MapPin, XCircle, CheckCircle, Ticket, User, QrCode } from 'lucide-react';
+import { Calendar, MapPin, XCircle, Ticket, QrCode } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
     const [registrations, setRegistrations] = useState([]);
@@ -42,11 +43,9 @@ const Dashboard = () => {
             <Navbar />
             
             <div className="pt-24 max-w-7xl mx-auto px-4">
-                <header className="mb-12 flex justify-between items-end border-b border-slate-800 pb-8">
-                    <div>
-                        <h1 className="text-4xl font-extrabold mb-4 uppercase tracking-tight">Your NEXUS dashboard</h1>
-                        <p className="text-slate-400">Manage all your event registrations and tickets here.</p>
-                    </div>
+                <header className="mb-12 border-b border-slate-800 pb-8">
+                    <h1 className="text-4xl font-extrabold mb-4 uppercase tracking-tight">Your NEXUS dashboard</h1>
+                    <p className="text-slate-400">Manage all your event registrations and tickets here.</p>
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -101,13 +100,13 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             </motion.div>
-                        ))}
+                        ))
                     ) : (
                         <div className="col-span-full py-20 text-center glass rounded-3xl border border-slate-800">
                             <Ticket className="w-16 h-16 text-slate-700 mx-auto mb-6" />
                             <h2 className="text-2xl font-bold mb-2">No registered events!</h2>
                             <p className="text-slate-500">You haven't registered for any events yet.</p>
-                            <Link to="/" className="mt-8 btn btn-primary px-8">Browse All Events</Link>
+                            <Link to="/" className="mt-8 btn btn-primary px-8 inline-block">Browse All Events</Link>
                         </div>
                     )}
                 </div>
