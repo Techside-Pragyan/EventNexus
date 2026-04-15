@@ -7,7 +7,14 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const path = require('path');
 const http = require('http');
+const fs = require('fs');
 const { Server } = require('socket.io');
+
+// Create uploads folder if not exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
 
 // Load environment variables
 dotenv.config();

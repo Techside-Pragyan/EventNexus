@@ -38,6 +38,10 @@ EventNexus is a modern, high-performance event management system designed for se
    - `MONGO_URI`: Your MongoDB connection string.
    - `JWT_SECRET`: A secure random key.
    - `JWT_EXPIRE`: Token duration (e.g., `30d`).
+   - `EMAIL_HOST`: SMTP host (e.g., `smtp.gmail.com`).
+   - `EMAIL_PORT`: SMTP port (e.g., `587`).
+   - `EMAIL_USER`: Your email address.
+   - `EMAIL_PASS`: Your email app password.
 4. **Seed the database** (Optional but recommended for testing):
    ```bash
    node utils/seed.js

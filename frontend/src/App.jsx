@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast as hotToast } from 'react-hot-toast';
+import { io } from 'socket.io-client';
 import { useAuth } from './context/AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -19,6 +21,24 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 };
 
 function App() {
+    useEffect(() => {
+        const socket = io('http://localhost:5000');
+
+        socket.on('newRegistration', (data) => {
+            hotToast(`${data.userName} just registered for ${data.eventTitle}!`, {
+                icon: '🎫',
+                style: {
+                    borderRadius: '10px',
+                    background: '#1e293b',
+                    color: '#fff',
+                    border: '1px solid #334155'
+                },
+            });
+        });
+
+        return () => socket.disconnect();
+    }, []);
+
     return (
         <Router>
             <Toaster position="top-right" />
