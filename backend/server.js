@@ -6,11 +6,33 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const path = require('path');
+const http = require('http');
+const { Server } = require('socket.io');
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        credentials: true
+    }
+});
+
+// Socket logic
+io.on('connection', (socket) => {
+    console.log('A user connected:', socket.id);
+    
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
+
+// Make io accessible to routes
+app.set('io', io);
 
 // Middleware
 app.use(express.json());
@@ -64,7 +86,7 @@ if (!MONGO_URI) {
 mongoose.connect(MONGO_URI)
     .then(() => {
         console.log('Connected to MongoDB');
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         });
     })

@@ -8,6 +8,14 @@ const Registration = require('../models/Registration');
 exports.createEvent = async (req, res, next) => {
     try {
         req.body.createdBy = req.user.id;
+        
+        if (req.file) {
+            req.body.image = {
+                secure_url: `/uploads/${req.file.filename}`,
+                public_id: req.file.filename
+            };
+        }
+
         const event = await Event.create(req.body);
         res.status(201).json({ success: true, data: event });
     } catch (err) {
@@ -23,6 +31,13 @@ exports.updateEvent = async (req, res, next) => {
         let event = await Event.findById(req.params.id);
         if (!event) {
             return res.status(404).json({ success: false, message: 'Event not found' });
+        }
+
+        if (req.file) {
+            req.body.image = {
+                secure_url: `/uploads/${req.file.filename}`,
+                public_id: req.file.filename
+            };
         }
 
         event = await Event.findByIdAndUpdate(req.params.id, req.body, {

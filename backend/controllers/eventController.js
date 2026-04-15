@@ -2,6 +2,7 @@ const Event = require('../models/Event');
 const Registration = require('../models/Registration');
 const User = require('../models/User');
 const QRCode = require('qrcode');
+const sendEmail = require('../utils/email');
 const { v4: uuidv4 } = require('uuid');
 
 // @desc    Get all events
@@ -88,6 +89,26 @@ exports.registerForEvent = async (req, res, next) => {
         const user = await User.findById(req.user.id);
         user.registeredEvents.push(event._id);
         await user.save();
+
+        // Send Email Notification
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: `Registration Successful: ${event.title}`,
+                html: `
+                    <h1>Registration Confirmed!</h1>
+                    <p>Hi ${user.name},</p>
+                    <p>You have successfully registered for <strong>${event.title}</strong>.</p>
+                    <p><strong>Date:</strong> ${new Date(event.date).toLocaleDateString()}</p>
+                    <p><strong>Time:</strong> ${event.time}</p>
+                    <p><strong>Location:</strong> ${event.location}</p>
+                    <p>Your Ticket ID is: <strong>${ticketId}</strong></p>
+                    <p>See you there!</p>
+                `
+            });
+        } catch (err) {
+            console.error('Email could not be sent', err);
+        }
 
         res.status(201).json({ success: true, data: registration });
     } catch (err) {
