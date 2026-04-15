@@ -20,7 +20,11 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 relative">
+        <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+            {/* Background Blobs */}
+            <div className="absolute -top-20 -left-20 w-80 h-80 bg-primary-600/20 rounded-full blur-[100px]"></div>
+            <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px]"></div>
+
              <div className="absolute top-10 left-10">
                 <Link to="/" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
                     <ArrowLeft className="w-5 h-5" /> Back to Home
