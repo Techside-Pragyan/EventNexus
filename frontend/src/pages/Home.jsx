@@ -45,71 +45,81 @@ const Home = () => {
             <Navbar />
             
             {/* Hero Section */}
-            <header className="relative pt-32 pb-20 overflow-hidden bg-cover bg-center">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,#4c1d95_0%,transparent_50%)] opacity-30"></div>
-                <div className="absolute inset-0 bg-[#0f172a]/70 backdrop-blur-sm"></div>
+            <header className="relative pt-48 pb-32 overflow-hidden">
+                {/* Background Blobs */}
+                <div className="absolute top-0 -left-20 w-96 h-96 bg-primary-600/30 rounded-full blur-[120px] animate-pulse"></div>
+                <div className="absolute top-40 -right-20 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
                 
                 <div className="relative max-w-7xl mx-auto px-4 text-center">
-                    <motion.h1 
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="text-6xl font-extrabold mb-6 tracking-tight"
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8 }}
                     >
-                        Nexus for <span className="text-primary-500">Events.</span>
-                    </motion.h1>
+                        <h1 className="text-7xl md:text-8xl font-black mb-6 tracking-tighter leading-none uppercase italic">
+                            The Nex<span className="text-primary-500">us</span> of <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-blue-500 to-purple-600">Experiences.</span>
+                        </h1>
+                    </motion.div>
+                    
                     <motion.p 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto"
+                        className="text-lg text-slate-400 mb-16 max-w-2xl mx-auto font-medium uppercase tracking-[0.3em]"
                     >
-                        Discover, explore and join world-class events from across the globe. Seamlessly manage your registrations and more.
+                        Protocol for discovery, entry, and management of global events.
                     </motion.p>
                     
                     {/* Search Bar */}
-                    <div className="max-w-4xl mx-auto glass p-2 rounded-2xl shadow-2xl flex flex-col md:flex-row gap-2">
-                        <div className="flex-1 relative">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        className="max-w-5xl mx-auto glass p-3 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-2 border border-white/5"
+                    >
+                        <div className="flex-[1.5] relative group">
+                            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary-500 transition-colors" />
                             <input 
                                 type="text"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 onKeyDown={handleSearch}
-                                placeholder="Search events..."
-                                className="w-full pl-12 pr-4 py-3 bg-transparent border-none focus:ring-0 text-white font-medium"
+                                placeholder="Search the Nexus..."
+                                className="w-full pl-16 pr-6 py-5 bg-slate-900/50 rounded-2xl border-none focus:ring-2 focus:ring-primary-500/50 text-white font-bold placeholder:text-slate-600 transition-all"
                             />
                         </div>
-                        <div className="w-px bg-slate-700 hidden md:block"></div>
-                        <div className="flex-1 px-4 py-3 flex items-center space-x-2">
-                            <Tag className="text-slate-500 w-5 h-5" />
+                        
+                        <div className="flex-1 px-4 py-3 flex items-center space-x-3 bg-slate-900/30 rounded-2xl border border-white/5">
+                            <Tag className="text-primary-500 w-5 h-5" />
                             <select 
                                 value={category}
                                 onChange={(e) => setCategory(e.target.value)}
-                                className="bg-transparent border-none text-slate-300 w-full focus:ring-0 appearance-none cursor-pointer"
+                                className="bg-transparent border-none text-slate-300 w-full focus:ring-0 appearance-none cursor-pointer font-bold text-sm uppercase tracking-widest"
                             >
-                                <option value="" className="bg-slate-900">All Categories</option>
+                                <option value="" className="bg-slate-900">All Sectors</option>
                                 {categories.map(c => <option key={c} value={c} className="bg-slate-900">{c}</option>)}
                             </select>
                         </div>
-                        <div className="w-px bg-slate-700 hidden md:block"></div>
-                        <div className="flex-1 px-4 py-3 flex items-center space-x-2">
-                            <MapPin className="text-slate-500 w-5 h-5" />
+                        
+                        <div className="flex-1 px-4 py-3 flex items-center space-x-3 bg-slate-900/30 rounded-2xl border border-white/5">
+                            <MapPin className="text-blue-500 w-5 h-5" />
                             <input 
                                 type="text"
                                 value={location}
                                 onChange={(e) => setLocation(e.target.value)}
-                                placeholder="Location..."
-                                className="bg-transparent border-none focus:ring-0 text-white w-full"
+                                placeholder="Coordinates..."
+                                className="bg-transparent border-none focus:ring-0 text-white w-full font-bold text-sm uppercase tracking-widest placeholder:text-slate-600"
                             />
                         </div>
+                        
                         <button 
                             onClick={fetchEvents}
-                            className="bg-primary-600 px-8 py-3 rounded-xl font-bold hover:bg-primary-500 transition-all shadow-lg active:scale-95"
+                            className="bg-primary-600 px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-primary-500 transition-all shadow-[0_0_30px_rgba(124,58,237,0.4)] active:scale-95 text-sm"
                         >
-                            Find
+                            Sync
                         </button>
-                    </div>
+                    </motion.div>
                 </div>
             </header>
 
