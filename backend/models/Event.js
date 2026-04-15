@@ -25,7 +25,7 @@ const eventSchema = new mongoose.Schema({
     category: {
         type: String,
         required: [true, 'Please provide an event category'],
-        enum: ['Tech', 'Music', 'Sports', 'Art', 'Food', 'Business', 'Other']
+        enum: ['Tech', 'Music', 'Sports', 'Art', 'Food', 'Business', 'Marriage', 'Birthday', 'Ceremony', 'Other']
     },
     image: {
         secure_url: { type: String, default: '' },

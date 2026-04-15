@@ -12,7 +12,7 @@ const Home = () => {
     const [category, setCategory] = useState('');
     const [location, setLocation] = useState('');
 
-    const categories = ['Tech', 'Music', 'Sports', 'Art', 'Food', 'Business', 'Other'];
+    const categories = ['Tech', 'Music', 'Sports', 'Art', 'Food', 'Business', 'Marriage', 'Birthday', 'Ceremony', 'Other'];
 
     useEffect(() => {
         fetchEvents();
