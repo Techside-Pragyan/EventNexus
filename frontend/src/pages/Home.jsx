@@ -197,11 +197,16 @@ const Home = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-20 glass rounded-3xl">
-                        <Calendar className="w-20 h-20 text-slate-700 mx-auto mb-4" />
-                        <h3 className="text-2xl font-bold mb-2">No events found.</h3>
-                        <p className="text-slate-500">Try adjusting your filters or check back later.</p>
-                        <button onClick={() => { setCategory(''); setLocation(''); setSearch(''); }} className="mt-6 text-primary-500 font-bold hover:underline">Clear all filters</button>
+                    <div className="text-center py-32 glass rounded-[40px] border border-white/5 relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-b from-primary-500/5 to-transparent"></div>
+                        <Calendar className="w-24 h-24 text-slate-800 mx-auto mb-8 group-hover:scale-110 group-hover:text-primary-900/40 transition-all duration-700" />
+                        <h3 className="text-3xl font-black mb-4 uppercase tracking-tighter">No Nexus Signals Found</h3>
+                        <p className="text-slate-500 max-w-sm mx-auto font-medium uppercase text-xs tracking-[0.2em] leading-loose">
+                            {loading ? 'Scanning global event protocols...' : 'Ensure your local MongoDB nexus is active or try adjusting your filters.'}
+                        </p>
+                        {(!loading && (category || location || search)) && (
+                            <button onClick={() => { setCategory(''); setLocation(''); setSearch(''); }} className="mt-10 btn btn-primary px-8 py-3 rounded-2xl font-black uppercase tracking-widest text-xs">Reset All Nodes</button>
+                        )}
                     </div>
                 )}
             </main>

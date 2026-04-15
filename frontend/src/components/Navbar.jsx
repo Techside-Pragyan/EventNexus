@@ -1,11 +1,29 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Calendar, User, LogOut, LayoutDashboard, Settings, Sparkles } from 'lucide-react';
+import { Calendar, User, LogOut, LayoutDashboard, Settings, Sparkles, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import API from '../services/api';
 
 const Navbar = () => {
     const { user, logout, isAdmin } = useAuth();
-    const navigate = useNavigate();
+    const [dbStatus, setDbStatus] = useState('checking');
+
+    useEffect(() => {
+        const checkConnection = async () => {
+            try {
+                await API.get('/auth/me'); // Just a ping to the server
+                setDbStatus('connected');
+            } catch (err) {
+                // If we get a response (even 401), the server is up
+                if (err.response) setDbStatus('connected');
+                else setDbStatus('disconnected');
+            }
+        };
+        checkConnection();
+        const interval = setInterval(checkConnection, 10000); // Check every 10s
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-7xl z-50">
@@ -18,6 +36,10 @@ const Navbar = () => {
                         <span className="text-xl font-black tracking-tighter uppercase italic">
                             Event<span className="text-primary-500">Nexus</span>
                         </span>
+                        <div className="flex items-center gap-1.5 ml-4 bg-slate-900/50 px-3 py-1 rounded-full border border-white/5">
+                            <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${dbStatus === 'connected' ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]'}`}></div>
+                            <span className="text-[8px] font-black uppercase tracking-widest text-slate-500">{dbStatus === 'connected' ? 'Nexus Link Active' : 'Nexus Link Offline'}</span>
+                        </div>
                     </Link>
 
                     <div className="flex items-center space-x-8">
