@@ -14,6 +14,7 @@ const AdminDashboard = () => {
     const [formData, setFormData] = useState({
         title: '', description: '', date: '', time: '', location: '', category: 'Tech', ticketType: 'Free', price: 0, maxAttendees: 100
     });
+    const [imageFile, setImageFile] = useState(null);
 
     useEffect(() => {
         fetchAdminData();
@@ -38,15 +39,24 @@ const AdminDashboard = () => {
     const handleCreateUpdate = async (e) => {
         e.preventDefault();
         try {
+            const data = new FormData();
+            Object.keys(formData).forEach(key => data.append(key, formData[key]));
+            if (imageFile) data.append('image', imageFile);
+
             if (editingEvent) {
-                await API.put(`/admin/events/${editingEvent._id}`, formData);
+                await API.put(`/admin/events/${editingEvent._id}`, data, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
                 toast.success('Event updated!');
             } else {
-                await API.post('/admin/events', formData);
+                await API.post('/admin/events', data, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
                 toast.success('Event created!');
             }
             setShowModal(false);
             setEditingEvent(null);
+            setImageFile(null);
             setFormData({ title: '', description: '', date: '', time: '', location: '', category: 'Tech', ticketType: 'Free', price: 0, maxAttendees: 100 });
             fetchAdminData();
         } catch (error) {
@@ -277,6 +287,15 @@ const AdminDashboard = () => {
                                                 required
                                             />
                                         </div>
+                                    </div>
+                                    <div className="space-y-2 col-span-2">
+                                        <label className="text-xs font-bold text-slate-500 uppercase">Event Image</label>
+                                        <input 
+                                            type="file"
+                                            onChange={(e) => setImageFile(e.target.files[0])}
+                                            className="input-field py-2"
+                                            accept="image/*"
+                                        />
                                     </div>
                                 </div>
                                 

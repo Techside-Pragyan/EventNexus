@@ -110,6 +110,13 @@ exports.registerForEvent = async (req, res, next) => {
             console.error('Email could not be sent', err);
         }
 
+        // Broadcast notification
+        const io = req.app.get('io');
+        io.emit('newRegistration', {
+            eventTitle: event.title,
+            userName: user.name
+        });
+
         res.status(201).json({ success: true, data: registration });
     } catch (err) {
         next(err);
