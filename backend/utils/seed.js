@@ -41,6 +41,30 @@ const events = [
         price: 45,
         maxAttendees: 1000,
         image: { secure_url: "https://images.unsplash.com/photo-1533359448864-219973fc7443?auto=format&fit=crop&w=800&q=80" }
+    },
+    {
+        title: "The Royal Wedding: Sarah & James",
+        description: "Witness the beautiful union of Sarah and James in a grand garden setting. A day of love, laughter, and high-end ceremony celebrating their journey together.",
+        date: "2026-08-12",
+        time: "04:30 PM",
+        location: "Grand Heritage Palace, London",
+        category: "Marriage",
+        ticketType: "Free",
+        price: 0,
+        maxAttendees: 300,
+        image: { secure_url: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80" }
+    },
+    {
+        title: "Leo's 1st Birthday Adventure",
+        description: "Celebrate Leo's first big milestone with a jungle-themed birthday party! Games, cakes, and fun activities for kids and adults alike.",
+        date: "2026-06-25",
+        time: "11:00 AM",
+        location: "SkyHigh Soft Play, Chicago",
+        category: "Birthday",
+        ticketType: "Free",
+        price: 0,
+        maxAttendees: 50,
+        image: { secure_url: "https://images.unsplash.com/photo-1530103043960-ef38714abb15?auto=format&fit=crop&w=800&q=80" }
     }
 ];
 

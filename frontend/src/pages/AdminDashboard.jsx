@@ -262,6 +262,9 @@ const AdminDashboard = () => {
                                             <option>Art</option>
                                             <option>Food</option>
                                             <option>Business</option>
+                                            <option>Marriage</option>
+                                            <option>Birthday</option>
+                                            <option>Ceremony</option>
                                             <option>Other</option>
                                         </select>
                                     </div>
