@@ -81,22 +81,23 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Database Connection and Server Start
+// Server Start
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
 
+// Database Connection
+const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) {
     console.error('MONGO_URI is not defined in .env file');
-    process.exit(1);
-}
-
-mongoose.connect(MONGO_URI)
-    .then(() => {
-        console.log('Connected to MongoDB');
-        server.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
+} else {
+    mongoose.connect(MONGO_URI)
+        .then(() => {
+            console.log('Connected to MongoDB');
+        })
+        .catch((err) => {
+            console.error('CRITICAL: MongoDB connection error. Please ensure MongoDB is running.');
+            console.error(`Error details: ${err.message}`);
         });
-    })
-    .catch((err) => {
-        console.error('MongoDB connection error:', err);
-    });
+}
